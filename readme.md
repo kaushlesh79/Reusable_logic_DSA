@@ -108,3 +108,53 @@ public:
 };
 
 ```
+
+### BFS - Graph Traversal Technique (Here we use queue ) 
+
+  ```cpp
+
+     bool bfs(int numCourses ,  vector<vector<int>>&adj ){
+
+    vector<int>indegree(numCourses , 0);
+
+    for(int i =0;i<numCourses;i++){
+
+        for(auto it : adj[i]){
+
+            indegree[it]++;
+
+        }
+    }
+  
+
+ queue<int>q;
+
+  for(int i=0;i<numCourses;i++){
+
+    if(indegree[i]==0) q.push(i);
+ }
+
+ int count_of_traversed_vertices = 0;
+
+
+  while(!q.empty()){
+
+    int u = q.front();
+    q.pop();
+    count_of_traversed_vertices++;
+
+    for(auto v : adj[u]){
+
+        indegree[v]--;  // as its parent popped we need to decrease child indegree
+
+        if(indegree[v] == 0) q.push(v);
+    }
+  }
+
+  return numCourses==count_of_traversed_vertices;
+
+
+
+
+}
+```
